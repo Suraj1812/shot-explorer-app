@@ -1244,6 +1244,36 @@ button {
     color: #1a211c
 }
 
+.clear-source-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(46, 61, 49, .18);
+    border-radius: 999px;
+    background: rgba(255, 254, 250, .9);
+    color: #304034;
+    box-shadow: 0 5px 14px rgba(37, 56, 42, .18);
+    backdrop-filter: blur(8px);
+    transition: transform .2s ease, background .2s ease, color .2s ease
+}
+
+.clear-source-button:hover {
+    background: #26352a;
+    color: #fffefa;
+    transform: scale(1.04)
+}
+
+.clear-source-button:focus-visible {
+    outline: 3px solid #a6ce48;
+    outline-offset: 3px
+}
+
 .home-topbar {
     height: 78px;
     padding: 0 42px;
