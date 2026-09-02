@@ -1541,9 +1541,10 @@ button {
 /* Structured, readable notifications for every user-facing status. */
 .toast {
     right: 24px;
-    bottom: 24px;
+    top: 24px;
+    bottom: auto;
     z-index: 20;
-    width: min(390px, calc(100vw - 32px));
+    width: min(360px, calc(100vw - 32px));
     display: flex;
     align-items: flex-start;
     gap: 11px;
@@ -1604,6 +1605,14 @@ button {
     color: #5f8518
 }
 
+.toast-success { border-left: 4px solid #91bd36 }
+
+.toast-info { border-left: 4px solid #5c9bb4 }
+
+.toast-warning { border-left: 4px solid #d1a12b }
+
+.toast-error { border-left: 4px solid #c35b4f }
+
 .toast-info .toast-icon {
     background: #e5f0f5;
     color: #39718b
@@ -1627,7 +1636,7 @@ button {
 @media(max-width:700px) {
     .toast {
         right: 16px;
-        bottom: 16px
+        top: 16px
     }
 }
 
