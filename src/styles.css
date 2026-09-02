@@ -31,21 +31,23 @@ button {
     cursor: pointer
 }
 
-.home-content-top-left {
+.home-shell .home-content-top-left {
     min-height: 100vh;
     width: 100%;
     margin: 0;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 48px 52px 64px
 }
 
-.home-grid-top-left {
+.home-shell .home-grid-top-left {
     width: min(440px, 100%);
     margin: 0
 }
 
 @media(max-width:700px) {
-    .home-content-top-left {
+    .home-shell .home-content-top-left {
         padding: 32px 18px 50px
     }
 }
