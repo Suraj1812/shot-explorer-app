@@ -27,7 +27,6 @@ function Launcher() {
         <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt="Shot Explorer thumbnail" /></div>
         <div className="minimal-tool-info">
           <h1>{tool.name}</h1>
-          <div className="byline">by You</div>
           <p>{tool.description}</p>
           <span className="open-link">Open tool <b>→</b></span>
         </div>
