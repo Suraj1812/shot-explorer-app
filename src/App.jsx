@@ -1,0 +1,75 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+
+const TOOLS = [{ id: "shot-explorer", name: "Shot Explorer", description: "See your scene from new angles", status: "AVAILABLE NOW" }];
+
+function Sidebar() {
+  return <aside className="flow-sidebar">
+    <Link className="back-button" to="/"><span>←</span> Explore Tools</Link>
+    <nav className="primary-nav" aria-label="Workspace">
+      <a href="#media" className="nav-item"><span>▦</span> All Media</a>
+      <a href="#characters" className="nav-item"><span>♙</span> Characters</a>
+      <a href="#scenes" className="nav-item"><span>▤</span> Scenes</a>
+    </nav>
+    <div className="sidebar-divider" />
+    <div className="tools-nav active"><span>✦</span> Tools <span className="nav-chevron">⌃</span></div>
+    <Link className="sidebar-tool" to="/tools/shot-explorer"><span className="mini-tool-icon">◉</span><span>Shot Explorer</span></Link>
+    <a className="trash-button" href="#trash"><span>▣</span> Trash</a>
+    <button className="collapse-button" type="button"><span>◧</span> Collapse</button>
+  </aside>;
+}
+
+function Launcher() {
+  const [activeTab, setActiveTab] = useState("my-tools");
+  const [notice, setNotice] = useState("");
+  const visibleTools = useMemo(() => TOOLS, []);
+  return <div className="flow-shell">
+    <Sidebar />
+    <main className="flow-content">
+      <header className="flow-header"><div className="tabs" role="tablist" aria-label="Tool collections">
+        {[['my-tools', 'My Tools'], ['community', 'Community'], ['templates', 'Templates']].map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={activeTab === id} className={`tab ${activeTab === id ? "active" : ""}`} onClick={() => setActiveTab(id)}>{label}</button>)}
+      </div></header>
+      {activeTab === "my-tools" ? <section className="page-content">
+        <section className="feature-banner"><div className="feature-copy"><div className="feature-kicker">CREATIVE TOOLS</div><h1>Build tools for your creative workflow</h1><p>Use your tools to turn ideas into images and scenes. Add more tools anytime as your collection grows.</p></div><div className="feature-demo"><div className="demo-toolbar"><span>Effect Mode</span><strong>Shot Explorer</strong></div><div className="demo-stage"><div className="demo-image">◉</div><div className="demo-controls"><i /><i /><i /><i /></div></div></div></section>
+        <section className="creation-section"><div className="section-heading"><h2>My creations</h2><span className="count">{visibleTools.length} tool</span></div><div className="creation-grid">
+          <button className="create-card" type="button" onClick={() => setNotice("Create New is ready for your next tool.")}><span className="create-plus">+</span><span className="create-label">Create New</span><small>Build another creative tool</small></button>
+          {visibleTools.map((tool) => <article className="tool-card" key={tool.id}><Link className="tool-card-link" to={`/tools/${tool.id}`}><div className="tool-thumbnail"><span>◉</span></div><div className="tool-info"><h3>{tool.name}</h3><div className="byline">by You</div><p>{tool.description}</p><span className="open-link">Open tool <b>→</b></span></div></Link><button className="card-menu" aria-label={`${tool.name} options`} type="button" onClick={() => setNotice(`${tool.name} is ready to open.`)}>⋮</button></article>)}
+        </div></section>
+        <section className="coming-section"><span className="coming-plus">+</span><div><strong>More tools coming soon</strong><small>Add more tools to your collection when they are ready.</small></div></section>
+        {notice && <div className="toast" role="status">{notice}<button type="button" onClick={() => setNotice("")}>×</button></div>}
+      </section> : <section className="page-content"><div className="empty-panel"><div>{activeTab === "community" ? "✦" : "▦"}</div><h2>{activeTab === "community" ? "Community tools" : "Tool templates"}</h2><p>{activeTab === "community" ? "Community tools will appear here when you add them." : "Start from a template when you are ready to create another tool."}</p></div></section>}
+      <footer className="flow-footer">Flow Tools can make mistakes. Double check generated results before using them.</footer>
+    </main>
+  </div>;
+}
+
+function readDataUrl(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
+function loadImage(url) { return new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = reject; image.src = url; }); }
+
+function localPreview(image, settings, mode) {
+  const canvas = document.createElement("canvas"); canvas.width = 900; canvas.height = 620;
+  const context = canvas.getContext("2d"); context.fillStyle = "#050606"; context.fillRect(0, 0, canvas.width, canvas.height);
+  const imageRatio = image.width / image.height; const canvasRatio = canvas.width / canvas.height; let width = canvas.width; let height = canvas.height;
+  if (imageRatio > canvasRatio) height = width / imageRatio; else width = height * imageRatio;
+  context.save(); context.translate(canvas.width / 2 + settings.panX * 1.5, canvas.height / 2 + settings.panY * 1.5); const extra = mode === "pro" ? 1.08 : 1; context.scale(settings.zoom * extra, settings.zoom * extra);
+  if (settings.perspective === "overhead") context.transform(1, -.12, 0, .78, 0, 0); if (settings.perspective === "side") context.transform(.72, .04, 0, 1, 0, 0); if (settings.perspective === "back") context.scale(-1, 1);
+  context.drawImage(image, -width / 2, -height / 2, width, height); context.restore(); return canvas.toDataURL("image/jpeg", .9);
+}
+
+function ShotExplorer() {
+  const [source, setSource] = useState(null); const [settings, setSettings] = useState({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); const [mode, setMode] = useState("fast"); const [results, setResults] = useState([]); const [favorite, setFavorite] = useState(false); const [generating, setGenerating] = useState(false); const [status, setStatus] = useState("Ready when you are");
+  const setFile = async (file) => { if (!file?.type?.startsWith("image/")) return; try { const url = URL.createObjectURL(file); const [image, dataUrl] = await Promise.all([loadImage(url), readDataUrl(file)]); setSource({ fileName: file.name, image, url, dataUrl }); setSettings({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); setResults([]); setStatus("Image ready"); } catch { setStatus("That image could not be opened"); } };
+  const updateSettings = (action, value) => setSettings((current) => { const next = { ...current }; if (action === "perspective") next.perspective = value; if (action === "pan") { const distance = mode === "pro" ? 54 : 35; next.panX += value === "left" ? -distance : value === "right" ? distance : 0; next.panY += value === "up" ? -distance : value === "down" ? distance : 0; } if (action === "zoom") next.zoom = value === "in" ? Math.min(2.3, current.zoom + .18) : value === "out" ? Math.max(.72, current.zoom - .18) : 2.3; return next; });
+  const actionLabel = (action, value) => action === "perspective" ? `${value[0].toUpperCase()}${value.slice(1)} angle` : action === "pan" ? `Pan ${value}` : action === "zoom" ? (value === "detail" ? "Extreme detail" : `Zoom ${value}`) : "Surprise angle";
+  const generate = async (label, nextSettings = settings) => { if (!source || generating) return; setGenerating(true); setStatus("Generating with Gemini…"); let imageUrl = ""; let usedGemini = false; try { const response = await fetch("/api/generate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: source.dataUrl, prompt: `Edit this reference image into a cinematic ${label.toLowerCase()}. Preserve the same subject, identity, environment, colors, and visual style. Change only camera viewpoint and framing. Do not add text, logos, borders, or new objects.` }) }); const data = await response.json().catch(() => ({})); if (!response.ok) throw new Error(data.error || "Gemini unavailable"); imageUrl = data.image; usedGemini = true; } catch (error) { imageUrl = localPreview(source.image, nextSettings, mode); setStatus(error.message.includes("not configured") ? `${label} created locally · add GEMINI_API_KEY for AI` : `${label} created locally · Gemini unavailable`); } finally { setGenerating(false); } setResults((current) => [{ id: crypto.randomUUID(), label, imageUrl, source: usedGemini ? "Gemini" : "Local" }, ...current]); if (!imageUrl) setStatus(`${label} created`); };
+  const handleControl = async (action, value) => { if (!source || generating) return; let next = settings; if (action === "surprise") { const perspectives = ["overhead", "side", "back"]; next = { perspective: perspectives[Math.floor(Math.random() * perspectives.length)], panX: Math.round((Math.random() - .5) * 100), panY: Math.round((Math.random() - .5) * 70), zoom: .9 + Math.random() * .8 }; setSettings(next); } else { next = { ...settings }; if (action === "perspective") next.perspective = value; if (action === "pan") { const distance = mode === "pro" ? 54 : 35; next.panX += value === "left" ? -distance : value === "right" ? distance : 0; next.panY += value === "up" ? -distance : value === "down" ? distance : 0; } if (action === "zoom") next.zoom = value === "in" ? Math.min(2.3, settings.zoom + .18) : value === "out" ? Math.max(.72, settings.zoom - .18) : 2.3; setSettings(next); } await generate(actionLabel(action, value || "surprise"), next); };
+  const download = (result, index) => { const link = document.createElement("a"); link.href = result.imageUrl; link.download = `shot-explorer-${index + 1}.jpg`; link.click(); };
+  const controls = [['Perspective', [['overhead', '🦅 overhead'], ['side', '📐 side'], ['back', '👤 back']]], ['Pan', [['left', '⬅️ left'], ['right', '➡️ right'], ['up', '⬆️ up'], ['down', '⬇️ down']]], ['Zoom', [['in', '🔍 zoom in'], ['out', '🔭 zoom out'], ['detail', '👁️ extreme detail'], ['surprise', '🎲 surprise me']]]];
+  return <div className="tool-shell"><Sidebar /><main className="tool-content"><header className="tool-topbar"><Link className="tool-back" to="/"><span>←</span></Link><div className="tool-title"><span className="mini-tool-icon">◉</span><div><strong>Shot Explorer</strong><small>See your scene from new angles</small></div></div><div className="tool-actions"><button type="button" className={`favorite-button ${favorite ? "liked" : ""}`} onClick={() => setFavorite(!favorite)} aria-label="Favorite">{favorite ? "♥" : "♡"}</button><Link className="done-button" to="/">Done</Link></div></header>
+    <div className="tool-workspace"><section className="control-panel"><div className="upload-zone"><div className="preview-frame">{source ? <img src={source.url} alt="Selected source" style={{ transform: `translate(${settings.panX}px, ${settings.panY}px) scale(${settings.zoom}) ${settings.perspective === "overhead" ? "perspective(500px) rotateX(32deg) rotateZ(-2deg) scaleY(.9)" : settings.perspective === "side" ? "perspective(500px) rotateY(-37deg) scaleX(.78)" : settings.perspective === "back" ? "rotateY(180deg)" : ""}` }} /> : <div className="empty-state"><div className="empty-icon">▦</div><p>Select an image to start exploring angles</p></div>}</div><label className="select-image-button" htmlFor="imageInput"><span>▦</span> SELECT IMAGE</label><input id="imageInput" type="file" accept="image/*" hidden onChange={(event) => setFile(event.target.files?.[0])} /><p className="upload-hint">{source ? `${source.fileName} selected · choose a control to create an angle` : "Drop an image here or choose one from your device"}</p></div>
+      <div className="controls">{controls.map(([group, items]) => <div className="control-group" key={group}><div className="group-label">{group}</div><div className="button-row">{items.map(([value, label]) => <button className="control-button" type="button" key={value} disabled={!source || generating} onClick={() => handleControl(group === "Perspective" ? "perspective" : group === "Pan" ? "pan" : value === "surprise" ? "surprise" : "zoom", value)}>{label}</button>)}</div></div>)}</div>
+      <div className="bottom-controls"><button className="reset-button" type="button" disabled={!source || generating} onClick={() => { setSettings({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); setStatus("Reset complete"); }}><span>↻</span> RESET</button><div className="mode-toggle" role="group" aria-label="Generation mode">{['fast', 'pro'].map((item) => <button className={`mode-button ${mode === item ? "selected" : ""}`} type="button" key={item} onClick={() => setMode(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}</div></div></section>
+      <section className="results-panel"><div className="results-header"><div><div className="eyebrow">GENERATED ANGLES</div><h1>Explore the shot</h1></div><div className="status-pill">{status}</div></div>{results.length ? <div className="results-grid">{results.map((result, index) => <article className="result-card" key={result.id}><img src={result.imageUrl} alt={result.label} /><div className="result-meta"><div><div className="result-title">{result.label}</div><div className="result-subtitle">{result.source} · variation {results.length - index}</div></div><button className="download-button" type="button" onClick={() => download(result, index)} aria-label={`Download ${result.label}`}>⇩</button></div></article>)}</div> : <div className="results-empty"><div className="results-empty-icon">✦</div><p>Your explored angles will appear here</p><span>Choose an image, then use the controls on the left.</span></div>}</section></div></main></div>;
+}
+
+export default function App() { const location = useLocation(); useEffect(() => { document.title = location.pathname.includes("shot-explorer") ? "Shot Explorer — Explore your shot from new angles" : "Explore Tools — Shot Explorer"; }, [location.pathname]); return <Routes><Route path="/" element={<Launcher />} /><Route path="/tools" element={<Launcher />} /><Route path="/tools/shot-explorer" element={<ShotExplorer />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
