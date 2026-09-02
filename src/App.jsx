@@ -20,20 +20,21 @@ function Sidebar() {
 }
 
 function Launcher() {
-  const tool = TOOLS[0];
   return <main className="minimal-launcher">
-    <article className="minimal-tool-card">
-      <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
-        <div className="minimal-tool-main">
-          <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt="Shot Explorer thumbnail" /></div>
-          <div className="minimal-tool-info">
-            <h1>{tool.name}</h1>
-            <p>{tool.description}</p>
+    <div className="minimal-tool-grid">
+      {TOOLS.map((tool) => <article className="minimal-tool-card" key={tool.id}>
+        <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
+          <div className="minimal-tool-main">
+            <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt={`${tool.name} thumbnail`} /></div>
+            <div className="minimal-tool-info">
+              <h1>{tool.name}</h1>
+              <p>{tool.description}</p>
+            </div>
           </div>
-        </div>
-        <span className="minimal-open-link">Open tool <b>→</b></span>
-      </Link>
-    </article>
+          <span className="minimal-open-link">Open tool <b>→</b></span>
+        </Link>
+      </article>)}
+    </div>
   </main>;
 }
 
