@@ -39,7 +39,7 @@ function localPreview(image, settings, mode) {
 }
 
 function HomePage() {
-  return <div className="home-shell"><main className="home-content"><div className="home-heading"><div className="home-eyebrow">CREATIVE TOOL</div><h1>Explore your shot</h1><p>Choose a tool to start working with your images and scenes.</p></div><section className="home-grid" aria-label="Available tools"><motion.article className="home-tool-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}><div className="home-tool-image"><img src="/assets/shot-explorer-thumbnail.png" alt="Shot Explorer" /></div><div className="home-tool-copy"><div><h2>Shot Explorer</h2><p>See your scene from new angles</p></div><Link className="home-open-link" to="/tools/shot-explorer">Open tool <ArrowRightIcon /></Link></div></motion.article></section></main></div>;
+  return <div className="home-shell"><main className="home-content"><div className="home-layout"><div className="home-heading"><div className="home-eyebrow">CREATIVE TOOL</div><h1>Explore your shot</h1><p>Choose a tool to start working with your images and scenes.</p></div><section className="home-grid" aria-label="Available tools"><motion.article className="home-tool-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}><div className="home-tool-image"><img src="/assets/shot-explorer-thumbnail.png" alt="Shot Explorer" /></div><div className="home-tool-copy"><div><h2>Shot Explorer</h2><p>See your scene from new angles</p></div><Link className="home-open-link" to="/tools/shot-explorer">Open tool <ArrowRightIcon /></Link></div></motion.article></section></div></main></div>;
 }
 
 function ArrowRightIcon() { return <span aria-hidden="true">→</span>; }
