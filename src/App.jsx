@@ -1,43 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-const TOOLS = [{ id: "shot-explorer", name: "Shot Explorer", description: "See your scene from new angles", thumbnail: "/assets/shot-explorer-thumbnail.png", status: "AVAILABLE NOW" }];
-
-function Sidebar() {
-  return <aside className="flow-sidebar">
-    <Link className="back-button" to="/"><span>←</span> Explore Tools</Link>
-    <nav className="primary-nav" aria-label="Workspace">
-      <a href="#media" className="nav-item"><span>▦</span> All Media</a>
-      <a href="#characters" className="nav-item"><span>♙</span> Characters</a>
-      <a href="#scenes" className="nav-item"><span>▤</span> Scenes</a>
-    </nav>
-    <div className="sidebar-divider" />
-    <div className="tools-nav active"><span>✦</span> Tools <span className="nav-chevron">⌃</span></div>
-    <Link className="sidebar-tool" to="/tools/shot-explorer"><span className="mini-tool-icon">◉</span><span>Shot Explorer</span></Link>
-    <a className="trash-button" href="#trash"><span>▣</span> Trash</a>
-    <button className="collapse-button" type="button"><span>◧</span> Collapse</button>
-  </aside>;
-}
-
-function Launcher() {
-  return <main className="minimal-launcher">
-    <div className="minimal-tool-grid">
-      {TOOLS.map((tool) => <article className="minimal-tool-card" key={tool.id}>
-        <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
-          <div className="minimal-tool-main">
-            <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt={`${tool.name} thumbnail`} /></div>
-            <div className="minimal-tool-info">
-              <h1>{tool.name}</h1>
-              <p>{tool.description}</p>
-            </div>
-          </div>
-          <span className="minimal-open-link">Open tool <b>→</b></span>
-        </Link>
-      </article>)}
-    </div>
-  </main>;
-}
-
 function readDataUrl(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
 function loadImage(url) { return new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = reject; image.src = url; }); }
 
@@ -59,11 +22,11 @@ function ShotExplorer() {
   const handleControl = async (action, value) => { if (!source || generating) return; let next = settings; if (action === "surprise") { const perspectives = ["overhead", "side", "back"]; next = { perspective: perspectives[Math.floor(Math.random() * perspectives.length)], panX: Math.round((Math.random() - .5) * 100), panY: Math.round((Math.random() - .5) * 70), zoom: .9 + Math.random() * .8 }; setSettings(next); } else { next = { ...settings }; if (action === "perspective") next.perspective = value; if (action === "pan") { const distance = mode === "pro" ? 54 : 35; next.panX += value === "left" ? -distance : value === "right" ? distance : 0; next.panY += value === "up" ? -distance : value === "down" ? distance : 0; } if (action === "zoom") next.zoom = value === "in" ? Math.min(2.3, settings.zoom + .18) : value === "out" ? Math.max(.72, settings.zoom - .18) : 2.3; setSettings(next); } await generate(actionLabel(action, value || "surprise"), next); };
   const download = (result, index) => { const link = document.createElement("a"); link.href = result.imageUrl; link.download = `shot-explorer-${index + 1}.jpg`; link.click(); };
   const controls = [['Perspective', [['overhead', '🦅 overhead'], ['side', '📐 side'], ['back', '👤 back']]], ['Pan', [['left', '⬅️ left'], ['right', '➡️ right'], ['up', '⬆️ up'], ['down', '⬇️ down']]], ['Zoom', [['in', '🔍 zoom in'], ['out', '🔭 zoom out'], ['detail', '👁️ extreme detail'], ['surprise', '🎲 surprise me']]]];
-  return <div className="tool-shell"><Sidebar /><main className="tool-content"><header className="tool-topbar"><Link className="tool-back" to="/"><span>←</span></Link><div className="tool-title"><span className="mini-tool-icon">◉</span><div><strong>Shot Explorer</strong><small>See your scene from new angles</small></div></div><div className="tool-actions"><button type="button" className={`favorite-button ${favorite ? "liked" : ""}`} onClick={() => setFavorite(!favorite)} aria-label="Favorite">{favorite ? "♥" : "♡"}</button><Link className="done-button" to="/">Done</Link></div></header>
+  return <div className="tool-shell"><main className="tool-content"><header className="tool-topbar"><Link className="tool-back" to="/"><span>←</span></Link><div className="tool-title"><span className="mini-tool-icon">◉</span><div><strong>Shot Explorer</strong><small>See your scene from new angles</small></div></div><div className="tool-actions"><button type="button" className={`favorite-button ${favorite ? "liked" : ""}`} onClick={() => setFavorite(!favorite)} aria-label="Favorite">{favorite ? "♥" : "♡"}</button><Link className="done-button" to="/">Done</Link></div></header>
     <div className="tool-workspace"><section className="control-panel"><div className="upload-zone"><div className="preview-frame">{source ? <img src={source.url} alt="Selected source" style={{ transform: `translate(${settings.panX}px, ${settings.panY}px) scale(${settings.zoom}) ${settings.perspective === "overhead" ? "perspective(500px) rotateX(32deg) rotateZ(-2deg) scaleY(.9)" : settings.perspective === "side" ? "perspective(500px) rotateY(-37deg) scaleX(.78)" : settings.perspective === "back" ? "rotateY(180deg)" : ""}` }} /> : <div className="empty-state"><div className="empty-icon">▦</div><p>Select an image to start exploring angles</p></div>}</div><label className="select-image-button" htmlFor="imageInput"><span>▦</span> SELECT IMAGE</label><input id="imageInput" type="file" accept="image/*" hidden onChange={(event) => setFile(event.target.files?.[0])} /><p className="upload-hint">{source ? `${source.fileName} selected · choose a control to create an angle` : "Drop an image here or choose one from your device"}</p></div>
       <div className="controls">{controls.map(([group, items]) => <div className="control-group" key={group}><div className="group-label">{group}</div><div className="button-row">{items.map(([value, label]) => <button className="control-button" type="button" key={value} disabled={!source || generating} onClick={() => handleControl(group === "Perspective" ? "perspective" : group === "Pan" ? "pan" : value === "surprise" ? "surprise" : "zoom", value)}>{label}</button>)}</div></div>)}</div>
       <div className="bottom-controls"><button className="reset-button" type="button" disabled={!source || generating} onClick={() => { setSettings({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); setStatus("Reset complete"); }}><span>↻</span> RESET</button><div className="mode-toggle" role="group" aria-label="Generation mode">{['fast', 'pro'].map((item) => <button className={`mode-button ${mode === item ? "selected" : ""}`} type="button" key={item} onClick={() => setMode(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}</div></div></section>
       <section className="results-panel"><div className="results-header"><div><div className="eyebrow">GENERATED ANGLES</div><h1>Explore the shot</h1></div><div className="status-pill">{status}</div></div>{results.length ? <div className="results-grid">{results.map((result, index) => <article className="result-card" key={result.id}><img src={result.imageUrl} alt={result.label} /><div className="result-meta"><div><div className="result-title">{result.label}</div><div className="result-subtitle">{result.source} · variation {results.length - index}</div></div><button className="download-button" type="button" onClick={() => download(result, index)} aria-label={`Download ${result.label}`}>⇩</button></div></article>)}</div> : <div className="results-empty"><div className="results-empty-icon">✦</div><p>Your explored angles will appear here</p><span>Choose an image, then use the controls on the left.</span></div>}</section></div></main></div>;
 }
 
-export default function App() { const location = useLocation(); useEffect(() => { document.title = location.pathname.includes("shot-explorer") ? "Shot Explorer — Explore your shot from new angles" : "Explore Tools — Shot Explorer"; }, [location.pathname]); return <Routes><Route path="/" element={<Launcher />} /><Route path="/tools" element={<Launcher />} /><Route path="/tools/shot-explorer" element={<ShotExplorer />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
+export default function App() { const location = useLocation(); useEffect(() => { document.title = "Shot Explorer — Explore your shot from new angles"; }, [location.pathname]); return <Routes><Route path="/" element={<ShotExplorer />} /><Route path="/tools" element={<ShotExplorer />} /><Route path="/tools/shot-explorer" element={<ShotExplorer />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
