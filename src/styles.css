@@ -1492,6 +1492,52 @@ button {
     background: #e0ff79
 }
 
+/* Keep the homepage light even after the responsive/theme overrides above. */
+.home-shell {
+    background: radial-gradient(circle at 8% 0%, rgba(191, 225, 164, .58), transparent 31%), radial-gradient(circle at 94% 78%, rgba(209, 228, 204, .72), transparent 38%), linear-gradient(118deg, #e8efe6 0%, #fbfaf5 46%, #e7eee6 100%);
+    color: #1b251e
+}
+
+.home-eyebrow {
+    color: #557d13
+}
+
+.home-intro h1 {
+    color: #1b251e
+}
+
+.home-intro p {
+    color: #68766d
+}
+
+.home-tool-card {
+    border-color: #d0dbd2;
+    background: rgba(255, 254, 250, .92);
+    box-shadow: 0 20px 48px rgba(67, 84, 69, .14), inset 0 1px 0 rgba(255, 255, 255, .8)
+}
+
+.home-tool-image {
+    background: radial-gradient(circle at 65% 38%, rgba(202, 239, 112, .8) 0, transparent 19%), linear-gradient(135deg, #dcebd7, #f0f2e9 70%)
+}
+
+.home-tool-copy h2 {
+    color: #202b22
+}
+
+.home-tool-copy p {
+    color: #68766d
+}
+
+.home-open-link {
+    background: #b9ee4d;
+    color: #203018;
+    box-shadow: 0 8px 18px rgba(101, 142, 41, .16)
+}
+
+.home-open-link:hover {
+    background: #c8f86a
+}
+
 /* Final light theme: keep the existing layout and controls, but make every surface easy on the eyes. */
 :root {
     color-scheme: light;
