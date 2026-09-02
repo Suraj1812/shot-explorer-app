@@ -1341,6 +1341,115 @@ button {
     }
 }
 
+/* Keep the homepage in the same visual language as the dark editing workspace. */
+.home-shell {
+    background: radial-gradient(circle at 10% 0%, rgba(53, 83, 48, .5), transparent 32%), radial-gradient(circle at 94% 76%, rgba(34, 63, 48, .42), transparent 38%), linear-gradient(125deg, #080b0a 0%, #101614 47%, #0b100e 100%);
+    color: var(--text)
+}
+
+.home-eyebrow {
+    color: var(--accent)
+}
+
+.home-heading h1 {
+    color: #f3f5f2
+}
+
+.home-heading p {
+    color: #9ca7a0
+}
+
+.home-tool-card {
+    border-color: #2e3a34;
+    background: rgba(20, 25, 23, .94);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .04)
+}
+
+.home-tool-image {
+    background: radial-gradient(circle at 65% 38%, rgba(196, 244, 91, .72) 0, transparent 18%), linear-gradient(135deg, #273a25, #101715 70%)
+}
+
+.home-tool-copy h2 {
+    color: #f1f4f0
+}
+
+.home-tool-copy p {
+    color: #9ca7a0
+}
+
+.home-open-link {
+    background: var(--accent);
+    color: #192014
+}
+
+.home-open-link:hover {
+    background: #e0ff79
+}
+
+.home-content {
+    min-height: 100vh;
+    width: min(1180px, calc(100% - 80px));
+    display: grid;
+    place-items: center;
+    padding: 40px 0
+}
+
+.home-grid {
+    width: min(440px, 100%);
+    margin: 0
+}
+
+@media(max-width:700px) {
+    .home-content {
+        width: calc(100% - 36px);
+        padding: 28px 0
+    }
+}
+
+.home-shell {
+    background: radial-gradient(circle at 10% 0%, rgba(53, 83, 48, .5), transparent 32%), radial-gradient(circle at 94% 76%, rgba(34, 63, 48, .42), transparent 38%), linear-gradient(125deg, #080b0a 0%, #101614 47%, #0b100e 100%);
+    color: var(--text)
+}
+
+.home-eyebrow {
+    color: var(--accent)
+}
+
+.home-heading h1 {
+    color: #f3f5f2
+}
+
+.home-heading p {
+    color: #9ca7a0
+}
+
+.home-tool-card {
+    border-color: #2e3a34;
+    background: rgba(20, 25, 23, .94);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .04)
+}
+
+.home-tool-image {
+    background: radial-gradient(circle at 65% 38%, rgba(196, 244, 91, .72) 0, transparent 18%), linear-gradient(135deg, #273a25, #101715 70%)
+}
+
+.home-tool-copy h2 {
+    color: #f1f4f0
+}
+
+.home-tool-copy p {
+    color: #9ca7a0
+}
+
+.home-open-link {
+    background: var(--accent);
+    color: #192014
+}
+
+.home-open-link:hover {
+    background: #e0ff79
+}
+
 .home-shell {
     background: radial-gradient(circle at 8% 10%, rgba(191, 222, 163, .88), transparent 31%), radial-gradient(circle at 94% 78%, rgba(204, 225, 196, .84), transparent 37%), linear-gradient(118deg, #d9e5d9 0%, #efede5 45%, #dce7dc 100%)
 }
@@ -1406,4 +1515,49 @@ button {
     .home-tool-image {
         height: 190px
     }
+}
+
+/* Final homepage theme override: match the dark editing workspace. */
+.home-shell {
+    background: radial-gradient(circle at 10% 0%, rgba(53, 83, 48, .5), transparent 32%), radial-gradient(circle at 94% 76%, rgba(34, 63, 48, .42), transparent 38%), linear-gradient(125deg, #080b0a 0%, #101614 47%, #0b100e 100%);
+    color: var(--text)
+}
+
+.home-eyebrow {
+    color: var(--accent)
+}
+
+.home-heading h1 {
+    color: #f3f5f2
+}
+
+.home-heading p {
+    color: #9ca7a0
+}
+
+.home-tool-card {
+    border-color: #2e3a34;
+    background: rgba(20, 25, 23, .94);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .04)
+}
+
+.home-tool-image {
+    background: radial-gradient(circle at 65% 38%, rgba(196, 244, 91, .72) 0, transparent 18%), linear-gradient(135deg, #273a25, #101715 70%)
+}
+
+.home-tool-copy h2 {
+    color: #f1f4f0
+}
+
+.home-tool-copy p {
+    color: #9ca7a0
+}
+
+.home-open-link {
+    background: var(--accent);
+    color: #192014
+}
+
+.home-open-link:hover {
+    background: #e0ff79
 }
