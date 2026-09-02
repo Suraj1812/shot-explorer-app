@@ -31,6 +31,25 @@ button {
     cursor: pointer
 }
 
+.home-content-top-left {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    display: block;
+    padding: 48px 52px 64px
+}
+
+.home-grid-top-left {
+    width: min(440px, 100%);
+    margin: 0
+}
+
+@media(max-width:700px) {
+    .home-content-top-left {
+        padding: 32px 18px 50px
+    }
+}
+
 .flow-shell,
 .tool-shell {
     display: flex;
@@ -1384,6 +1403,51 @@ button {
 
 .home-open-link:hover {
     background: #e0ff79
+}
+
+.home-content {
+    min-height: 100vh;
+    width: 100%;
+    display: block;
+    padding: 48px 52px 64px
+}
+
+.home-intro {
+    max-width: 560px;
+    margin-bottom: 28px
+}
+
+.home-intro h1 {
+    margin: 9px 0 7px;
+    color: #f3f5f2;
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1;
+    letter-spacing: -.06em
+}
+
+.home-intro p {
+    margin: 0;
+    color: #9ca7a0;
+    font-size: 15px
+}
+
+.home-grid {
+    width: min(440px, 100%);
+    margin: 0
+}
+
+@media(max-width:700px) {
+    .home-content {
+        padding: 32px 18px 50px
+    }
+
+    .home-intro {
+        margin-bottom: 24px
+    }
+
+    .home-intro h1 {
+        font-size: 34px
+    }
 }
 
 .home-content {
