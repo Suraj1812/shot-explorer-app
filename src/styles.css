@@ -31,6 +31,46 @@ button {
     cursor: pointer
 }
 
+.result-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    gap: 6px
+}
+
+.download-button,
+.delete-button {
+    border: 0;
+    background: transparent;
+    color: #a7b0aa;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 8px;
+    line-height: 1
+}
+
+.download-button {
+    color: var(--accent)
+}
+
+.download-button:hover {
+    background: rgba(215, 255, 104, .1)
+}
+
+.delete-button:hover {
+    color: #ff8d86;
+    background: rgba(255, 102, 93, .1)
+}
+
+.delete-button:focus-visible {
+    outline: 2px solid #ff8d86;
+    outline-offset: 2px
+}
+
 .home-shell .home-content-top-left {
     min-height: 100vh;
     width: 100%;
