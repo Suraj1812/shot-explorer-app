@@ -1540,8 +1540,8 @@ button {
 
 /* Structured, readable notifications for every user-facing status. */
 .toast {
-    right: 24px;
-    top: 94px;
+    right: 10px;
+    top: 10px;
     bottom: auto;
     z-index: 20;
     width: min(360px, calc(100vw - 32px));
