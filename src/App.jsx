@@ -24,12 +24,14 @@ function Launcher() {
   return <main className="minimal-launcher">
     <article className="minimal-tool-card">
       <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
-        <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt="Shot Explorer thumbnail" /></div>
-        <div className="minimal-tool-info">
-          <h1>{tool.name}</h1>
-          <p>{tool.description}</p>
-          <span className="open-link">Open tool <b>→</b></span>
+        <div className="minimal-tool-main">
+          <div className="minimal-tool-thumbnail"><img src={tool.thumbnail} alt="Shot Explorer thumbnail" /></div>
+          <div className="minimal-tool-info">
+            <h1>{tool.name}</h1>
+            <p>{tool.description}</p>
+          </div>
         </div>
+        <span className="minimal-open-link">Open tool <b>→</b></span>
       </Link>
     </article>
   </main>;
