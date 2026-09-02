@@ -30,7 +30,7 @@ function loadImage(url) { return new Promise((resolve, reject) => { const image 
 
 function localPreview(image, settings, mode) {
   const canvas = document.createElement("canvas"); canvas.width = 900; canvas.height = 620;
-  const context = canvas.getContext("2d"); context.fillStyle = "#050606"; context.fillRect(0, 0, canvas.width, canvas.height);
+  const context = canvas.getContext("2d"); context.fillStyle = "#eeece3"; context.fillRect(0, 0, canvas.width, canvas.height);
   const imageRatio = image.width / image.height; const canvasRatio = canvas.width / canvas.height; let width = canvas.width; let height = canvas.height;
   if (imageRatio > canvasRatio) height = width / imageRatio; else width = height * imageRatio;
   context.save(); context.translate(canvas.width / 2 + settings.panX * 1.5, canvas.height / 2 + settings.panY * 1.5); const extra = mode === "pro" ? 1.08 : 1; context.scale(settings.zoom * extra, settings.zoom * extra);

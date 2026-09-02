@@ -1462,6 +1462,222 @@ button {
     background: #e0ff79
 }
 
+/* Final light theme: keep the existing layout and controls, but make every surface easy on the eyes. */
+:root {
+    color-scheme: light;
+    --bg: #f1f3ed;
+    --panel: #fffefa;
+    --panel2: #f6f5ee;
+    --line: #d7ded5;
+    --muted: #6a776e;
+    --text: #1b251e;
+    --accent: #b9f24f
+}
+
+html,
+body {
+    background: var(--bg);
+    color: var(--text)
+}
+
+.flow-shell,
+.tool-shell {
+    background: radial-gradient(circle at 8% 0%, rgba(193, 227, 166, .45), transparent 30%), linear-gradient(135deg, #f1f3ed 0%, #fbfaf5 52%, #e9f0e8 100%);
+    color: var(--text)
+}
+
+.tool-topbar {
+    border-bottom-color: var(--line);
+    background: rgba(255, 255, 252, .8)
+}
+
+.tool-back {
+    color: var(--text)
+}
+
+.tool-back:hover {
+    background: #e6eee1
+}
+
+.tool-title small {
+    color: var(--muted)
+}
+
+.tool-brand-icon {
+    background: #f7f5ea;
+    border-color: #a7bd62;
+    box-shadow: inset 0 0 0 1px #e7f19a
+}
+
+.done-button {
+    background: #26352a;
+    color: #fffefa;
+    box-shadow: 0 6px 14px rgba(44, 65, 49, .16)
+}
+
+.control-panel,
+.results-panel {
+    background: rgba(255, 255, 252, .74)
+}
+
+.control-panel {
+    border-right-color: var(--line)
+}
+
+.preview-frame {
+    border-color: #c8d3c8;
+    background: #eeece3;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72)
+}
+
+.empty-state {
+    color: #718078
+}
+
+.select-image-button {
+    border-color: #bdcbbf;
+    color: #2d3c31;
+    background: rgba(255, 255, 252, .68)
+}
+
+.select-image-button:hover,
+.select-image-button.dragging {
+    border-color: #96bf3d;
+    color: #557b16;
+    background: #f0f8df
+}
+
+.upload-hint,
+.result-subtitle {
+    color: #738078
+}
+
+.group-label {
+    color: #526157
+}
+
+.control-button {
+    border-color: #cbd6cd;
+    background: #fffefa;
+    color: #607066;
+    box-shadow: 0 2px 7px rgba(62, 81, 65, .06)
+}
+
+.control-button:not(:disabled):hover {
+    border-color: #9bbb51;
+    color: #3f5f12;
+    background: #f0f8df
+}
+
+.reset-button {
+    border-color: #bdcbbf;
+    color: #526157;
+    background: rgba(255, 255, 252, .5)
+}
+
+.mode-toggle {
+    border-color: #bdcbbf;
+    background: rgba(255, 255, 252, .56)
+}
+
+.mode-button {
+    color: #6a776e
+}
+
+.mode-button.selected {
+    background: #26352a;
+    color: #fffefa
+}
+
+.results-header h1 {
+    color: var(--text)
+}
+
+.status-pill {
+    color: #65736a;
+    border-color: #c8d3c8;
+    background: rgba(255, 255, 252, .55)
+}
+
+.results-empty {
+    border-color: #c7d3c9;
+    color: #68766d;
+    background: rgba(255, 255, 252, .42)
+}
+
+.results-empty span {
+    color: #758279
+}
+
+.result-card {
+    border-color: #ccd7ce;
+    background: #fffefa;
+    box-shadow: 0 12px 30px rgba(64, 82, 67, .1)
+}
+
+.result-card img {
+    background: #eeece3
+}
+
+.download-button {
+    color: #71991e
+}
+
+.download-button:hover {
+    background: rgba(157, 207, 60, .16)
+}
+
+.delete-button {
+    color: #7b877f
+}
+
+.delete-button:hover {
+    color: #bd5b54;
+    background: rgba(205, 91, 81, .1)
+}
+
+.home-shell {
+    background: radial-gradient(circle at 8% 0%, rgba(191, 225, 164, .52), transparent 31%), radial-gradient(circle at 94% 78%, rgba(209, 228, 204, .66), transparent 38%), linear-gradient(118deg, #e8efe6 0%, #fbfaf5 46%, #e7eee6 100%);
+    color: var(--text)
+}
+
+.home-eyebrow {
+    color: #557d13
+}
+
+.home-intro h1 {
+    color: #1b251e
+}
+
+.home-intro p,
+.home-tool-copy p {
+    color: #68766d
+}
+
+.home-tool-card {
+    border-color: #d0dbd2;
+    background: rgba(255, 254, 250, .9);
+    box-shadow: 0 20px 48px rgba(67, 84, 69, .14), inset 0 1px 0 rgba(255, 255, 255, .8)
+}
+
+.home-tool-image {
+    background: radial-gradient(circle at 65% 38%, rgba(202, 239, 112, .8) 0, transparent 19%), linear-gradient(135deg, #dcebd7, #f0f2e9 70%)
+}
+
+.home-tool-copy h2 {
+    color: #202b22
+}
+
+.home-open-link {
+    background: #b9ee4d;
+    color: #203018;
+    box-shadow: 0 8px 18px rgba(101, 142, 41, .16)
+}
+
+.home-open-link:hover {
+    background: #c8f86a
+}
+
 .home-content {
     min-height: 100vh;
     width: 100%;
