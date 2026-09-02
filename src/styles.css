@@ -1631,6 +1631,162 @@ button {
     }
 }
 
+.generation-card {
+    min-height: 420px;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 18px;
+    padding: 42px 24px;
+    border: 1px dashed #c7d3c9;
+    border-radius: 18px;
+    background: radial-gradient(circle at 50% 34%, rgba(198, 239, 99, .22), transparent 32%), rgba(255, 255, 252, .52);
+    text-align: center;
+    overflow: hidden
+}
+
+.generation-visual {
+    position: relative;
+    width: 106px;
+    height: 106px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(145, 186, 49, .3);
+    border-radius: 50%;
+    color: #83b22d;
+    background: rgba(239, 250, 211, .78);
+    box-shadow: 0 0 0 14px rgba(196, 238, 100, .08), 0 0 55px rgba(164, 214, 64, .22);
+    animation: generation-breathe 2.2s ease-in-out infinite
+}
+
+.generation-orbit {
+    position: absolute;
+    inset: -13px;
+    border: 1px solid rgba(144, 188, 46, .28);
+    border-radius: 50%;
+    animation: generation-spin 3.8s linear infinite
+}
+
+.generation-orbit::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #b9ee4d;
+    box-shadow: 0 0 12px rgba(145, 207, 45, .8)
+}
+
+.generation-orbit-two {
+    inset: -24px;
+    border-color: rgba(144, 188, 46, .18);
+    animation-duration: 5.2s;
+    animation-direction: reverse
+}
+
+.generation-orbit-two::after {
+    top: auto;
+    right: 12px;
+    bottom: 8px;
+    left: auto;
+    width: 5px;
+    height: 5px
+}
+
+.generation-orbit-three {
+    inset: -36px;
+    border-color: rgba(144, 188, 46, .11);
+    animation-duration: 7s
+}
+
+.generation-orbit-three::after {
+    top: 50%;
+    right: -3px;
+    left: auto;
+    width: 4px;
+    height: 4px
+}
+
+.generation-copy {
+    display: grid;
+    gap: 6px
+}
+
+.generation-copy strong {
+    color: #243126;
+    font-size: 18px
+}
+
+.generation-copy span {
+    max-width: 360px;
+    color: #718078;
+    font-size: 13px
+}
+
+.generation-progress {
+    width: min(300px, 80%);
+    height: 5px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e0e9dc
+}
+
+.generation-progress span {
+    display: block;
+    width: 42%;
+    height: 100%;
+    border-radius: inherit;
+    background: #a7d93e;
+    box-shadow: 0 0 12px rgba(145, 207, 45, .55);
+    animation: generation-progress 1.6s ease-in-out infinite
+}
+
+.generation-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    color: #9aa69d;
+    font-size: 11px
+}
+
+.generation-steps span {
+    padding: 5px 9px;
+    border: 1px solid #d8e1d7;
+    border-radius: 999px;
+    background: rgba(255, 255, 252, .55)
+}
+
+.generation-steps .active {
+    border-color: #bfdc7e;
+    color: #668b1e;
+    background: #f0f8df
+}
+
+@keyframes generation-spin {
+    to { transform: rotate(360deg) }
+}
+
+@keyframes generation-breathe {
+    0%, 100% { transform: scale(.98); opacity: .88 }
+    50% { transform: scale(1.03); opacity: 1 }
+}
+
+@keyframes generation-progress {
+    0% { transform: translateX(-120%) }
+    100% { transform: translateX(300%) }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    .generation-visual,
+    .generation-orbit,
+    .generation-progress span {
+        animation: none
+    }
+}
+
 /* Final light theme: keep the existing layout and controls, but make every surface easy on the eyes. */
 :root {
     color-scheme: light;
