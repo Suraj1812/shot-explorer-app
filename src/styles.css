@@ -1541,7 +1541,7 @@ button {
 /* Structured, readable notifications for every user-facing status. */
 .toast {
     right: 24px;
-    top: 24px;
+    top: 94px;
     bottom: auto;
     z-index: 20;
     width: min(360px, calc(100vw - 32px));
@@ -1571,7 +1571,7 @@ button {
     min-width: 0;
     display: grid;
     gap: 3px;
-    padding-top: 1px
+    padding: 1px 28px 0 0
 }
 
 .toast-copy strong {
@@ -1586,9 +1586,15 @@ button {
 }
 
 .toast-close {
-    flex: 0 0 auto;
-    margin: -3px -3px 0 auto;
-    padding: 6px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    padding: 0;
     border: 0;
     border-radius: 8px;
     background: transparent;
@@ -1636,7 +1642,7 @@ button {
 @media(max-width:700px) {
     .toast {
         right: 16px;
-        top: 16px
+        top: 84px
     }
 }
 
