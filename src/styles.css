@@ -2194,47 +2194,56 @@ body {
     }
 }
 
-/* Final homepage theme override: match the dark editing workspace. */
+/* Final homepage theme override: keep the homepage light. */
 .home-shell {
-    background: radial-gradient(circle at 10% 0%, rgba(53, 83, 48, .5), transparent 32%), radial-gradient(circle at 94% 76%, rgba(34, 63, 48, .42), transparent 38%), linear-gradient(125deg, #080b0a 0%, #101614 47%, #0b100e 100%);
-    color: var(--text)
+    background: radial-gradient(circle at 8% 0%, rgba(191, 225, 164, .58), transparent 31%), radial-gradient(circle at 94% 78%, rgba(209, 228, 204, .72), transparent 38%), linear-gradient(118deg, #e8efe6 0%, #fbfaf5 46%, #e7eee6 100%);
+    color: #1b251e
 }
 
 .home-eyebrow {
-    color: var(--accent)
+    color: #557d13
 }
 
 .home-heading h1 {
-    color: #f3f5f2
+    color: #1b251e
 }
 
 .home-heading p {
-    color: #9ca7a0
+    color: #68766d
+}
+
+.home-intro h1 {
+    color: #1b251e
+}
+
+.home-intro p {
+    color: #68766d
 }
 
 .home-tool-card {
-    border-color: #2e3a34;
-    background: rgba(20, 25, 23, .94);
-    box-shadow: 0 22px 60px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .04)
+    border-color: #d0dbd2;
+    background: rgba(255, 254, 250, .92);
+    box-shadow: 0 20px 48px rgba(67, 84, 69, .14), inset 0 1px 0 rgba(255, 255, 255, .8)
 }
 
 .home-tool-image {
-    background: radial-gradient(circle at 65% 38%, rgba(196, 244, 91, .72) 0, transparent 18%), linear-gradient(135deg, #273a25, #101715 70%)
+    background: radial-gradient(circle at 65% 38%, rgba(202, 239, 112, .8) 0, transparent 19%), linear-gradient(135deg, #dcebd7, #f0f2e9 70%)
 }
 
 .home-tool-copy h2 {
-    color: #f1f4f0
+    color: #202b22
 }
 
 .home-tool-copy p {
-    color: #9ca7a0
+    color: #68766d
 }
 
 .home-open-link {
-    background: var(--accent);
-    color: #192014
+    background: #b9ee4d;
+    color: #203018;
+    box-shadow: 0 8px 18px rgba(101, 142, 41, .16)
 }
 
 .home-open-link:hover {
-    background: #e0ff79
+    background: #c8f86a
 }
