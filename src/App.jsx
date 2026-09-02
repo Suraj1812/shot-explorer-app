@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 const TOOLS = [{ id: "shot-explorer", name: "Shot Explorer", description: "See your scene from new angles", status: "AVAILABLE NOW" }];
 
@@ -20,27 +20,20 @@ function Sidebar() {
 }
 
 function Launcher() {
-  const [activeTab, setActiveTab] = useState("my-tools");
-  const [notice, setNotice] = useState("");
-  const visibleTools = useMemo(() => TOOLS, []);
-  return <div className="flow-shell">
-    <Sidebar />
-    <main className="flow-content">
-      <header className="flow-header"><div className="tabs" role="tablist" aria-label="Tool collections">
-        {[['my-tools', 'My Tools'], ['community', 'Community'], ['templates', 'Templates']].map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={activeTab === id} className={`tab ${activeTab === id ? "active" : ""}`} onClick={() => setActiveTab(id)}>{label}</button>)}
-      </div></header>
-      {activeTab === "my-tools" ? <section className="page-content">
-        <section className="feature-banner"><div className="feature-copy"><div className="feature-kicker">TOOLS</div><h1>Choose a tool</h1><p>Open a creative tool to start working with your images and scenes.</p></div><div className="feature-demo"><div className="demo-toolbar"><span>Effect Mode</span><strong>Shot Explorer</strong></div><div className="demo-stage"><div className="demo-image">◉</div><div className="demo-controls"><i /><i /><i /><i /></div></div></div></section>
-        <section className="creation-section"><div className="section-heading"><h2>My creations</h2><span className="count">{visibleTools.length} tool</span></div><div className="creation-grid">
-          <button className="create-card" type="button" onClick={() => setNotice("Create New is ready for your next tool.")}><span className="create-plus">+</span><span className="create-label">Create New</span><small>Build another creative tool</small></button>
-          {visibleTools.map((tool) => <article className="tool-card" key={tool.id}><Link className="tool-card-link" to={`/tools/${tool.id}`}><div className="tool-thumbnail"><span>◉</span></div><div className="tool-info"><h3>{tool.name}</h3><div className="byline">by You</div><p>{tool.description}</p><span className="open-link">Open tool <b>→</b></span></div></Link><button className="card-menu" aria-label={`${tool.name} options`} type="button" onClick={() => setNotice(`${tool.name} is ready to open.`)}>⋮</button></article>)}
-        </div></section>
-        <section className="coming-section"><span className="coming-plus">+</span><div><strong>More tools coming soon</strong><small>Add more tools to your collection when they are ready.</small></div></section>
-        {notice && <div className="toast" role="status">{notice}<button type="button" onClick={() => setNotice("")}>×</button></div>}
-      </section> : <section className="page-content"><div className="empty-panel"><div>{activeTab === "community" ? "✦" : "▦"}</div><h2>{activeTab === "community" ? "Community tools" : "Tool templates"}</h2><p>{activeTab === "community" ? "Community tools will appear here when you add them." : "Start from a template when you are ready to create another tool."}</p></div></section>}
-      <footer className="flow-footer">Flow Tools can make mistakes. Double check generated results before using them.</footer>
-    </main>
-  </div>;
+  const tool = TOOLS[0];
+  return <main className="minimal-launcher">
+    <article className="minimal-tool-card">
+      <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
+        <div className="tool-thumbnail"><span>◉</span></div>
+        <div className="tool-info">
+          <h1>{tool.name}</h1>
+          <div className="byline">by You</div>
+          <p>{tool.description}</p>
+          <span className="open-link">Open tool <b>→</b></span>
+        </div>
+      </Link>
+    </article>
+  </main>;
 }
 
 function readDataUrl(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
@@ -59,7 +52,6 @@ function localPreview(image, settings, mode) {
 function ShotExplorer() {
   const [source, setSource] = useState(null); const [settings, setSettings] = useState({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); const [mode, setMode] = useState("fast"); const [results, setResults] = useState([]); const [favorite, setFavorite] = useState(false); const [generating, setGenerating] = useState(false); const [status, setStatus] = useState("Ready when you are");
   const setFile = async (file) => { if (!file?.type?.startsWith("image/")) return; try { const url = URL.createObjectURL(file); const [image, dataUrl] = await Promise.all([loadImage(url), readDataUrl(file)]); setSource({ fileName: file.name, image, url, dataUrl }); setSettings({ perspective: "front", panX: 0, panY: 0, zoom: 1 }); setResults([]); setStatus("Image ready"); } catch { setStatus("That image could not be opened"); } };
-  const updateSettings = (action, value) => setSettings((current) => { const next = { ...current }; if (action === "perspective") next.perspective = value; if (action === "pan") { const distance = mode === "pro" ? 54 : 35; next.panX += value === "left" ? -distance : value === "right" ? distance : 0; next.panY += value === "up" ? -distance : value === "down" ? distance : 0; } if (action === "zoom") next.zoom = value === "in" ? Math.min(2.3, current.zoom + .18) : value === "out" ? Math.max(.72, current.zoom - .18) : 2.3; return next; });
   const actionLabel = (action, value) => action === "perspective" ? `${value[0].toUpperCase()}${value.slice(1)} angle` : action === "pan" ? `Pan ${value}` : action === "zoom" ? (value === "detail" ? "Extreme detail" : `Zoom ${value}`) : "Surprise angle";
   const generate = async (label, nextSettings = settings) => { if (!source || generating) return; setGenerating(true); setStatus("Generating with Gemini…"); let imageUrl = ""; let usedGemini = false; try { const response = await fetch("/api/generate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: source.dataUrl, prompt: `Edit this reference image into a cinematic ${label.toLowerCase()}. Preserve the same subject, identity, environment, colors, and visual style. Change only camera viewpoint and framing. Do not add text, logos, borders, or new objects.` }) }); const data = await response.json().catch(() => ({})); if (!response.ok) throw new Error(data.error || "Gemini unavailable"); imageUrl = data.image; usedGemini = true; } catch (error) { imageUrl = localPreview(source.image, nextSettings, mode); setStatus(error.message.includes("not configured") ? `${label} created locally · add GEMINI_API_KEY for AI` : `${label} created locally · Gemini unavailable`); } finally { setGenerating(false); } setResults((current) => [{ id: crypto.randomUUID(), label, imageUrl, source: usedGemini ? "Gemini" : "Local" }, ...current]); if (!imageUrl) setStatus(`${label} created`); };
   const handleControl = async (action, value) => { if (!source || generating) return; let next = settings; if (action === "surprise") { const perspectives = ["overhead", "side", "back"]; next = { perspective: perspectives[Math.floor(Math.random() * perspectives.length)], panX: Math.round((Math.random() - .5) * 100), panY: Math.round((Math.random() - .5) * 70), zoom: .9 + Math.random() * .8 }; setSettings(next); } else { next = { ...settings }; if (action === "perspective") next.perspective = value; if (action === "pan") { const distance = mode === "pro" ? 54 : 35; next.panX += value === "left" ? -distance : value === "right" ? distance : 0; next.panY += value === "up" ? -distance : value === "down" ? distance : 0; } if (action === "zoom") next.zoom = value === "in" ? Math.min(2.3, settings.zoom + .18) : value === "out" ? Math.max(.72, settings.zoom - .18) : 2.3; setSettings(next); } await generate(actionLabel(action, value || "surprise"), next); };
