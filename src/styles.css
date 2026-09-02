@@ -636,7 +636,8 @@ button {
     display: grid;
     place-items: center;
     overflow: hidden;
-    position: relative
+    position: relative;
+    padding: 12px
 }
 
 .preview-frame img {
@@ -644,7 +645,7 @@ button {
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: 100%;
+    max-height: calc(350px - 24px);
     object-fit: contain;
     object-position: center;
     flex: 0 0 auto
@@ -654,7 +655,7 @@ button {
     width: auto !important;
     height: auto !important;
     max-width: 100% !important;
-    max-height: 100% !important;
+    max-height: calc(350px - 24px) !important;
     object-fit: contain !important;
     object-position: center !important;
     transform: none !important
