@@ -650,6 +650,16 @@ button {
     flex: 0 0 auto
 }
 
+.preview-frame .source-image {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important
+}
+
 .empty-state {
     text-align: center;
     color: #7f8784
