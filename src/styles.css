@@ -1538,6 +1538,99 @@ button {
     background: #c8f86a
 }
 
+/* Structured, readable notifications for every user-facing status. */
+.toast {
+    right: 24px;
+    bottom: 24px;
+    z-index: 20;
+    width: min(390px, calc(100vw - 32px));
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 14px 13px 14px 15px;
+    border: 1px solid #d0dbd2;
+    border-radius: 16px;
+    background: rgba(255, 254, 250, .96);
+    color: #1b251e;
+    box-shadow: 0 18px 45px rgba(42, 59, 45, .2);
+    backdrop-filter: blur(14px);
+    animation: toast-in .24s ease-out
+}
+
+.toast-icon {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px
+}
+
+.toast-copy {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+    padding-top: 1px
+}
+
+.toast-copy strong {
+    font-size: 13px;
+    line-height: 1.2
+}
+
+.toast-copy span {
+    color: #68766d;
+    font-size: 12px;
+    line-height: 1.45
+}
+
+.toast-close {
+    flex: 0 0 auto;
+    margin: -3px -3px 0 auto;
+    padding: 6px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #758279
+}
+
+.toast-close:hover {
+    background: #edf2eb;
+    color: #26352a
+}
+
+.toast-success .toast-icon {
+    background: #e8f7c9;
+    color: #5f8518
+}
+
+.toast-info .toast-icon {
+    background: #e5f0f5;
+    color: #39718b
+}
+
+.toast-warning .toast-icon {
+    background: #fff1c7;
+    color: #9a7014
+}
+
+.toast-error .toast-icon {
+    background: #fde4df;
+    color: #b04e43
+}
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateY(10px) scale(.98) }
+    to { opacity: 1; transform: translateY(0) scale(1) }
+}
+
+@media(max-width:700px) {
+    .toast {
+        right: 16px;
+        bottom: 16px
+    }
+}
+
 /* Final light theme: keep the existing layout and controls, but make every surface easy on the eyes. */
 :root {
     color-scheme: light;
