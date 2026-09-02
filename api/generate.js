@@ -42,7 +42,7 @@ export default async function handler(request, response) {
       ] }],
       generationConfig: {
         responseModalities: ["Image"],
-        responseFormat: { image: { aspectRatio: "16:9", imageSize: "1K" } },
+        imageConfig: { aspectRatio: "16:9", imageSize: "1K" },
       },
     }),
   });
