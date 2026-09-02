@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-const TOOLS = [{ id: "shot-explorer", name: "Shot Explorer", description: "See your scene from new angles", status: "AVAILABLE NOW" }];
+const TOOLS = [{ id: "shot-explorer", name: "Shot Explorer", description: "See your scene from new angles", thumbnail: "/assets/shot-explorer-thumbnail.png", status: "AVAILABLE NOW" }];
 
 function Sidebar() {
   return <aside className="flow-sidebar">
@@ -24,7 +24,7 @@ function Launcher() {
   return <main className="minimal-launcher">
     <article className="minimal-tool-card">
       <Link className="minimal-tool-link" to={`/tools/${tool.id}`}>
-        <div className="tool-thumbnail"><span>◉</span></div>
+        <div className="tool-thumbnail"><img className="tool-thumbnail-image" src={tool.thumbnail} alt="Shot Explorer thumbnail" /></div>
         <div className="tool-info">
           <h1>{tool.name}</h1>
           <div className="byline">by You</div>
